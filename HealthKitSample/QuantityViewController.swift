@@ -9,7 +9,7 @@
 import UIKit
 
 class QuantityViewController: UIViewController {
-
+    @IBOutlet private weak var stepLabel:UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
        // self.navigationController?.navigationItem.hidesBackButton = true
@@ -27,6 +27,10 @@ class QuantityViewController: UIViewController {
     }
     
 
+    func updateLabelWith(text: String){
+        
+        stepLabel.text = text
+    }
     @IBAction func getStepData(){
         
         HealthKitManager.shared().getPreferredSourceFor(identifier: .stepCount) {[weak self] (result) in
@@ -36,7 +40,13 @@ class QuantityViewController: UIViewController {
             case .success(let value):
                 
                 if ((value) != nil){
-                    print("Success")
+                    HealthKitManager.shared().getStepCountPerDay(completion: {[weak self](count) in
+                        let stepCount = String(Int(count))
+                        DispatchQueue.main.async {
+                            self?.updateLabelWith(text: stepCount)
+                        }                        
+                    })
+                    //print("Success")
                 }else{
                     print("Failed with unknown error")
                     self?.showSettings()
@@ -52,7 +62,9 @@ class QuantityViewController: UIViewController {
         
         let appSettingsUrl = URL(string: UIApplicationOpenSettingsURLString)
         if #available(iOS 10.0, *) {
-            UIApplication.shared.open(appSettingsUrl!, options: [:], completionHandler: nil)
+            DispatchQueue.main.async{
+                UIApplication.shared.open(appSettingsUrl!, options: [:], completionHandler: nil)
+            }
         } else {
             UIApplication.shared.openURL(appSettingsUrl!)
         }

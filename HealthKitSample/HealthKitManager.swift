@@ -131,7 +131,7 @@ class HealthKitManager{
                 return
         }
         let deviceName: String = UIDevice.current.name
-        let sourceQuery = HKSourceQuery(sampleType: sampleType, samplePredicate: nil) { (query, sources, error) in
+        let sourceQuery = HKSourceQuery(sampleType: sampleType, samplePredicate: nil) { [weak self](query, sources, error) in
             
             if error != nil{
                 
@@ -149,19 +149,61 @@ class HealthKitManager{
                     // the device itself, we want that.
                     if source.name.isEqual(deviceName) {
                         completion(.success(source))
+                        break
                     }
                 }
+            }else{
+                completion(.error(self?.noSourceError()))
             }
-            
-            var userInfo = [String: Any]()
-            userInfo[NSLocalizedDescriptionKey] = "No suitable sources were found"
-            let noSource = NSError(domain: "ErrorDomain", code: HealthKitErrorCode.noSourceAvailable.rawValue, userInfo: userInfo)
-            completion(.error(noSource))
         }
 
         HKHealthStore().execute(sourceQuery)
     }
-    
+    func getStepCountPerDay(completion:@escaping (_ count: Double)-> Void){
+        
+        guard let sampleType = HKObjectType.quantityType(forIdentifier: .stepCount)
+            else {
+                return
+        }
+        let calendar = Calendar.current
+        var dateComponents = DateComponents()
+        dateComponents.day = 1
+        
+        var anchorComponents = calendar.dateComponents([.day, .month, .year], from: Date())
+        anchorComponents.hour = 0
+        let anchorDate = calendar.date(from: anchorComponents)
+        
+        let stepsCumulativeQuery = HKStatisticsCollectionQuery(quantityType: sampleType, quantitySamplePredicate: nil, options: .cumulativeSum, anchorDate: anchorDate!, intervalComponents: dateComponents
+        )
+        
+        // Set the results handler
+        stepsCumulativeQuery.initialResultsHandler = {query, results, error in
+            let endDate = Date()
+            let startDate = calendar.date(byAdding: .day, value: 0, to: endDate, wrappingComponents: false)
+            if let myResults = results{
+                myResults.enumerateStatistics(from: startDate!, to: endDate as Date) { statistics, stop in
+                    if let quantity = statistics.sumQuantity(){
+                        let date = statistics.startDate
+                        let steps = quantity.doubleValue(for: HKUnit.count())
+                        print("\(date): steps = \(steps)")
+                        completion(steps)
+                        //NOTE: If you are going to update the UI do it in the main thread
+                        DispatchQueue.main.async {
+                            //update UI components
+                        }
+                    }
+                } //end block
+            } //end if let
+        }
+        HKHealthStore().execute(stepsCumulativeQuery)
+    }
+        
+    func noSourceError()-> NSError{
+        var userInfo = [String: Any]()
+        userInfo[NSLocalizedDescriptionKey] = "No suitable sources were found"
+        let noSource = NSError(domain: "ErrorDomain", code: HealthKitErrorCode.noSourceAvailable.rawValue, userInfo: userInfo)
+        return noSource
+    }
     func isHealthKitAvailable()-> Bool{
         
         guard HKHealthStore.isHealthDataAvailable() else{
