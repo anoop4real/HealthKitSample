@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="3Ie-Io-FiQ">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="TrebuchetMS.ttf">
+            <string>TrebuchetMS</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="HealthKitSample" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Our application need access to your Health app to record steps, please provide access by tapping &quot;Authorize&quot; button." textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Fsb-GH-TSx">
+                                <rect key="frame" x="67" y="150" width="240" height="128"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="3vz-tZ-arJ"/>
+                                    <constraint firstAttribute="height" constant="128" id="Bhv-JD-2re"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9DB-a1-4CJ">
+                                <rect key="frame" x="154" y="337" width="66" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="66" id="GjW-D9-T60"/>
+                                    <constraint firstAttribute="height" constant="30" id="WxH-hg-zLl"/>
+                                </constraints>
+                                <state key="normal" title="Authorize"/>
+                                <connections>
+                                    <action selector="authorizeHealthKit" destination="BYZ-38-t0r" eventType="touchUpInside" id="4Bc-eK-ad8"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="9DB-a1-4CJ" firstAttribute="centerX" secondItem="Fsb-GH-TSx" secondAttribute="centerX" id="24M-01-A2x"/>
+                            <constraint firstItem="9DB-a1-4CJ" firstAttribute="top" secondItem="Fsb-GH-TSx" secondAttribute="bottom" constant="59" id="3Ja-oE-Sxj"/>
+                            <constraint firstItem="Fsb-GH-TSx" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="86" id="bjP-Cr-6AQ"/>
+                            <constraint firstItem="Fsb-GH-TSx" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="gPb-2H-NLZ"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Nep-vP-VqS"/>
+                    <connections>
+                        <segue destination="Gt6-Yp-ALy" kind="show" identifier="gotoStepScreen" animates="NO" id="tgs-ZB-aAe"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="972" y="48.125937031484263"/>
+        </scene>
+        <!--QuantityData-->
+        <scene sceneID="nQj-9S-EDg">
+            <objects>
+                <viewController title="QuantityData" id="Gt6-Yp-ALy" customClass="QuantityViewController" customModule="HealthKitSample" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="daV-bt-29h"/>
+                        <viewControllerLayoutGuide type="bottom" id="3YD-Og-x3F"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="cc9-s5-h4A">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tqS-jQ-Uaf">
+                                <rect key="frame" x="139" y="318" width="97" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="97" id="O06-LC-74D"/>
+                                    <constraint firstAttribute="height" constant="30" id="fK4-wV-dlL"/>
+                                </constraints>
+                                <state key="normal" title="Get Step Data"/>
+                                <connections>
+                                    <action selector="getStepData" destination="Gt6-Yp-ALy" eventType="touchUpInside" id="Qah-Lg-4Yd"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="286" placeholderIntrinsicHeight="153" text="00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E5H-yk-RUu">
+                                <rect key="frame" x="44" y="135" width="286" height="153"/>
+                                <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="100"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="tqS-jQ-Uaf" firstAttribute="centerY" secondItem="cc9-s5-h4A" secondAttribute="centerY" id="J71-hS-1Qt"/>
+                            <constraint firstItem="E5H-yk-RUu" firstAttribute="centerX" secondItem="cc9-s5-h4A" secondAttribute="centerX" id="JYG-4V-nry"/>
+                            <constraint firstItem="E5H-yk-RUu" firstAttribute="top" secondItem="daV-bt-29h" secondAttribute="bottom" constant="71" id="M2X-w7-sUX"/>
+                            <constraint firstItem="tqS-jQ-Uaf" firstAttribute="centerX" secondItem="cc9-s5-h4A" secondAttribute="centerX" id="n4U-3x-iS7"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="stepLabel" destination="E5H-yk-RUu" id="Fxz-YA-BQY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ppv-35-A9N" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1789.5999999999999" y="47.226386806596707"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="YTK-aQ-SEP">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="3Ie-Io-FiQ" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="aoo-ip-8VG">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="2uh-Et-qTa"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fYV-Yi-XRo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="29.600000000000001" y="-634.632683658171"/>
+        </scene>
+    </scenes>
+</document>
